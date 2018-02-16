@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+	<title>Gnubiquity Nao</title>
+		<meta charset=utf8>
+		<!-- prevent the user from scaling up or down the webpage -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" href="{{ url_for('static', filename='DesignApp.css') }}" />
+		<script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+        <!--
+		<script type="text/javascript" src="{{ url_for('static', filename='recorder.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='recorderWorker.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='recording.js') }}"></script>
+		-->
+		<link rel="apple-touch-icon" href="{{ url_for('static', filename='Favicon/apple-touch-icon-57x57.png',sizes='57x57') }}"/>
+		<link rel="apple-touch-icon" href="{{ url_for('static', filename='Favicon/apple-touch-icon-60x60.png',sizes='60x60') }}"/>
+		<link rel="apple-touch-icon" href="{{ url_for('static', filename='Favicon/apple-touch-icon-72x72.png',sizes='72x72') }}"/>
+		<link rel="apple-touch-icon" href="{{ url_for('static', filename='Favicon/apple-touch-icon-76x76.png',sizes='76x76') }}"/>
+		<link rel="apple-touch-icon" href="{{ url_for('static', filename='Favicon/apple-touch-icon-114x114.png',sizes='114x114') }}"/>
+		<link rel="apple-touch-icon" href="{{ url_for('static', filename='Favicon/apple-touch-icon-120x120.png',sizes='120x120') }}"/>
+		<link rel="apple-touch-icon" href="{{ url_for('static', filename='Favicon/apple-touch-icon-144x144.png',sizes='144x144') }}"/>
+		<link rel="apple-touch-icon" href="{{ url_for('static', filename='Favicon/apple-touch-icon-152x152.png',sizes='152x152') }}"/>
+		<link rel="apple-touch-icon" href="{{ url_for('static', filename='Favicon/apple-touch-icon-180x180.png',sizes='180x180') }}"/>
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='Favicon/favicon-32x32.png') }}"/>
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='Favicon/favicon-194x194.png', sizes='194x194') }}"/>
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='Favicon/favicon-96x96.png', sizes='96x96') }}"/>
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='Favicon/android-chrome-192x192.png', sizes='192x192') }}"/>
+		<link rel="icon" type="image/png" href="{{ url_for('static', filename='Favicon/favicon-16x16.png', sizes='16x16') }}"/>
+		<link rel="manifest" href="/manifest.json">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+	
+	</head>
+	
+	<body>
+	<div id="EnsembleTot">
+		<div id="hide">
+				<center>	
+				<div id="Upper1">
+					<center>
+						<img id="ImgLogo" src="{{ url_for('static', filename='LogoApp2.png') }}">
+					</center>
+				</div>
+				</center>
+		</div>
+	</div>		
+		
+			<center>	
+			
+				<div id="Button">
+					<center>
+					<img id="myImage" onclick="changeImage()" src="{{ url_for('static',filename='Button2Click.png') }}" width="80" height="40">
+					</center>	
+				</div>
+	
+			</center>
+		
+			<div id="Connexion"> 
+				<ul>
+					<a href="{{ url_for('about') }}"><li id="AboutUs"> About us </li></a><!--
+					--><a href="/"><li> Reload </li></a><!--
+					--><a href="http://www.w3schools.com"><li  id="Deconnexion"> Disconnect </li></a>
+				</ul> 
+			</div>
+			<div id="Main">
+                <!-- removed audio
+                <audio controls autoplay>
+                    <source src="/audio_feed" type="audio/mpeg">
+                    Your browser does not support this audio format.
+                </audio> -->
+				<div id="CadreCentral">
+				
+					<center>
+					
+					<div id = "output">		
+						<img src="{{ url_for('video_feed') }}" onclick="posImage(event);">
+					</div>
+					
+					</center>
+					
+					<div id="Buttons">
+						<img class="Button" id="joystickG" src="{{ url_for('static', filename='Button.png') }}" draggable="false">
+						<img class="ButtonB" onclick="HMI._posRestPressedHandle();" id="rest_button" src="{{ url_for('static', filename='Assis.png') }}" draggable="false">
+						<img class="ButtonB" onclick="HMI._posIdlePressedHandle();" id="idle_button" src="{{ url_for('static', filename='Debout.png') }}" draggable="false">
+						<img class="ButtonB" onclick="HMI._posCuePressedHandle();" id="cue_button" src="{{ url_for('static', filename='SigneMain.png') }}" draggable="false">
+						<img class="ButtonB" onmouseup="toggleRecording(this);" onmousedown="toggleRecording(this);" id="record" src="{{ url_for('static', filename='Micro.png') }}" draggable="false">
+						<img class="Button" id="joystickD" src="{{ url_for('static', filename='Button.png') }}" draggable="false">
+					</div>
+				</div>
+				<div id="CadreCentralbis">
+					<div id="form">
+						Write here what you want to say : <input id="text" type="text" name="Say"><br>
+						<br/>
+						<button id="submit" onclick="sendTTS();">submit</button><br/><br/>
+					</div>
+					<p id="CoordonneesG"></p>
+					<p id="CoordonneesD"></p>
+				</div>
+			</div>
+		
+		
+		<div id="Lower">
+		
+			<marquee direction="left"> 
+				All Rights Reserved. Engineering Students concerned : Le Borgne, Attié, Suntharasarma, Fath, Boully.
+			</marquee>
+		
+		</div>
+	
+		<script>
+			function changeImage() {
+				var image = document.getElementById('myImage');
+				var body = document.getElementById('EnsembleTot');
+					if (image.src.match("Button2Click")) {
+					image.src = "{{ url_for('static',filename='Button1click.png') }}";
+					body.style.display = 'none';
+					} else {
+						image.src = "{{ url_for('static', filename='Button2Click.png') }}";
+						body.style.display = 'block';
+							}
+						}
+					
+						
+		</script>
+		
+		<script type="text/javascript">
+	
+			var joyG = document.getElementById("joystickG");
+			LEFT_JOY.bind(joyG);
+			
+			var joyD = document.getElementById("joystickD");
+			RIGHT_JOY.bind(joyD);
+			
+		</script>
+	</div>
+	</body>
+
+</html>
